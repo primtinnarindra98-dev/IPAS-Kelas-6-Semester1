@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IPAS Explorer: Petualangan Tubuh Sehat - Kelas 6 SD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            green: '#10B981',
+                            teal: '#0D9488',
+                            blue: '#0284C7',
+                            amber: '#F59E0B',
+                            rose: '#F43F5E',
+                            purple: '#8B5CF6',
+                            dark: '#0F172A'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Fredoka', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 50%, #fef3c7 100%);
+            min-height: 100vh;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Fredoka', cursive;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
+        }
+        .btn-bounce {
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.15s ease;
+        }
+        .btn-bounce:active {
+            transform: scale(0.95);
+        }
+        .pulse-soft {
+            animation: pulseSoft 2s infinite ease-in-out;
+        }
+        @keyframes pulseSoft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col justify-between min-h-screen">
+
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-2 flex justify-between items-center shadow-sm">
+        <div class="flex items-center space-x-2">
+            <span class="text-2xl">🌎</span>
+            <span class="font-heading font-bold text-slate-800 text-sm md:text-base">IPAS EXPLORER</span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button id="soundToggleBtn" onclick="toggleSound()" class="flex items-center space-x-1 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-semibold px-3 py-1.5 rounded-full transition btn-bounce">
+                <span id="soundIcon">🔊</span>
+                <span id="soundText">SUARA ON</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col justify-center">
+
+        <!-- 1. HALAMAN PEMBUKA -->
+        <section id="welcomeScreen" class="glass-card rounded-3xl p-6 md:p-10 text-center flex flex-col items-center justify-center space-y-6 animate-fade-in">
+            <div class="relative">
+                <div class="w-28 h-28 md:w-36 md:h-36 bg-emerald-100 rounded-full flex items-center justify-center text-6xl shadow-inner pulse-soft border-4 border-emerald-300">
+                    🫀
+                </div>
+                <span class="absolute -top-2 -right-2 bg-amber-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow">SD KELAS 6</span>
+            </div>
+
+            <!-- SVG Graphics Decorative Header -->
+            <div class="w-full max-w-md mx-auto flex justify-center space-x-4 my-2">
+                <div class="bg-blue-50 p-3 rounded-2xl border border-blue-200 flex flex-col items-center flex-1">
+                    <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <span class="text-xs font-bold text-blue-700 mt-1">Pencernaan</span>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 flex flex-col items-center flex-1">
+                    <svg class="w-10 h-10 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 001-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/>
+                    </svg>
+                    <span class="text-xs font-bold text-emerald-700 mt-1">Pernapasan</span>
+                </div>
+                <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 flex flex-col items-center flex-1">
+                    <span class="text-2xl">🍎</span>
+                    <span class="text-xs font-bold text-amber-700 mt-1">Gizi Sehat</span>
+                </div>
+            </div>
+
+            <div>
+                <h1 class="text-2xl md:text-4xl font-extrabold text-slate-800 tracking-tight leading-tight">
+                    🌎 IPAS EXPLORER <br/><span class="text-emerald-600">PETUALANGAN TUBUH SEHAT</span>
+                </h1>
+                <p class="text-slate-600 text-sm md:text-base mt-2 font-medium">
+                    “Taklukkan 50 Tantangan dan Jadilah Pahlawan Tubuh Sehat!”
+                </p>
+            </div>
+
+            <div class="bg-white/80 p-4 rounded-2xl border border-slate-200 text-left w-full max-w-md text-xs text-slate-600 space-y-1 shadow-sm">
+                <p class="font-bold text-slate-800 text-sm mb-1 flex items-center">
+                    <span class="mr-1">🎮</span> Aturan Petualangan:
+                </p>
+                <p>• Menyelesaikan 50 Soal Evaluasi IPAS SD Semester 1</p>
+                <p>• Misi terbagi menjadi 5 Level Petualangan Tubuh</p>
+                <p>• Dilengkapi Nyawa, Pembahasan Lengkap, & Sertifikat Kelulusan</p>
+            </div>
+
+            <button onclick="goToIdentity()" class="w-full max-w-sm bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-heading font-bold text-lg md:text-xl py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition btn-bounce flex items-center justify-center space-x-2">
+                <span>🚀 MULAI PETUALANGAN</span>
+            </button>
+        </section>
+
+        <!-- 2. FORM IDENTITAS MURID -->
+        <section id="identityScreen" class="hidden glass-card rounded-3xl p-6 md:p-10 max-w-lg mx-auto w-full space-y-6">
+            <div class="text-center space-y-2">
+                <div class="text-4xl">📝</div>
+                <h2 class="text-2xl font-bold text-slate-800">Identitas Penjelajah</h2>
+                <p class="text-slate-500 text-sm">Isi data dirimu sebelum memulai misi petualangan!</p>
+            </div>
+
+            <form id="identityForm" onsubmit="startMission(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Lengkap Murid *</label>
+                    <input type="text" id="studentName" required placeholder="Contoh: Budi Pratama" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none transition text-slate-800 font-semibold">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Sekolah *</label>
+                    <input type="text" id="schoolName" required placeholder="Contoh: SDN Nusantara 01" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none transition text-slate-800 font-semibold">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kelas</label>
+                        <input type="text" value="Kelas VI (Enam)" disabled class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-100 font-bold text-slate-600 cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor Absen</label>
+                        <input type="number" id="absentNum" min="1" max="50" placeholder="12" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none transition text-slate-800 font-semibold">
+                    </div>
+                </div>
+
+                <div id="identityError" class="hidden bg-rose-50 text-rose-600 text-xs p-3 rounded-xl border border-rose-200 font-semibold text-center">
+                    ⚠️ Identitas belum lengkap. Yuk, isi terlebih dahulu!
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-heading font-bold text-lg py-3.5 px-6 rounded-xl shadow-md transition btn-bounce flex items-center justify-center space-x-2">
+                    <span>🎯 MULAI MISI</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- 3. HALAMAN SOAL GAME -->
+        <section id="quizScreen" class="hidden space-y-4">
+            <!-- Header Status Game -->
+            <div class="glass-card rounded-2xl p-4 flex flex-wrap justify-between items-center gap-3">
+                <div class="flex items-center space-x-3">
+                    <div id="levelBadge" class="bg-amber-100 text-amber-800 font-heading font-bold text-xs md:text-sm px-3 py-1.5 rounded-xl border border-amber-300 flex items-center space-x-1">
+                        <span>🌱</span> <span id="levelName">LEVEL 1</span>
+                    </div>
+                    <div id="livesContainer" class="flex space-x-1 text-lg" title="Nyawa Petualang">
+                        <span id="heart1">❤️</span>
+                        <span id="heart2">❤️</span>
+                        <span id="heart3">❤️</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <div class="bg-blue-50 text-blue-700 px-3 py-1 rounded-xl text-xs font-bold border border-blue-200 flex items-center space-x-1">
+                        <span>⏱️</span> <span id="timerDisplay">00:00:00</span>
+                    </div>
+                    <div class="text-xs font-bold text-slate-500">
+                        Skor: <span id="currentScore" class="text-emerald-600 text-sm">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden shadow-inner">
+                <div id="progressBar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-full rounded-full transition-all duration-300" style="width: 2%;"></div>
+            </div>
+
+            <!-- Card Soal -->
+            <div class="glass-card rounded-3xl p-5 md:p-8 space-y-6 relative overflow-hidden">
+                <div class="flex justify-between items-center border-b border-slate-200/80 pb-3">
+                    <span id="questionNumTag" class="font-heading font-bold text-sm md:text-base text-slate-700 bg-slate-100 px-3 py-1 rounded-xl">
+                        🧠 TANTANGAN 01 / 50
+                    </span>
+                    <span id="cogLevelTag" class="text-xs font-extrabold px-3 py-1 rounded-full bg-indigo-100 text-indigo-700">
+                        LEVEL: ★★ (L2)
+                    </span>
+                </div>
+
+                <!-- Gambar/Diagram SVG Opsional -->
+                <div id="illustrationContainer" class="hidden flex justify-center bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <!-- Dynamic SVG Rendered Here -->
+                </div>
+
+                <!-- Teks Soal -->
+                <div id="questionText" class="text-slate-800 font-semibold text-base md:text-lg leading-relaxed">
+                    <!-- Question text injected here -->
+                </div>
+
+                <!-- Pilihan Jawaban -->
+                <div id="optionsContainer" class="space-y-3">
+                    <!-- Options injected here -->
+                </div>
+
+                <!-- Input Khusus Soal Isian -->
+                <div id="shortAnswerContainer" class="hidden space-y-3">
+                    <input type="text" id="shortAnswerInput" placeholder="Ketik jawaban singkatmu di sini..." class="w-full p-4 rounded-2xl border-2 border-slate-300 focus:border-emerald-500 focus:outline-none font-bold text-slate-800">
+                </div>
+
+                <div class="pt-2 flex justify-end">
+                    <button id="submitBtn" onclick="checkAnswer()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-heading font-bold px-8 py-3 rounded-2xl shadow-md transition btn-bounce flex items-center space-x-2">
+                        <span>✅ JAWAB</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL FEEDBACK JAWABAN -->
+        <div id="feedbackModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="glass-card rounded-3xl p-6 md:p-8 max-w-lg w-full space-y-4 shadow-2xl border-2 animate-bounce-in">
+                <div id="feedbackHeader" class="text-center space-y-1">
+                    <div id="feedbackIcon" class="text-5xl">🎉</div>
+                    <h3 id="feedbackTitle" class="text-2xl font-bold font-heading">BENAR!</h3>
+                    <p id="feedbackSubtitle" class="text-sm font-medium">Hebat! Jawabanmu tepat!</p>
+                </div>
+
+                <!-- Pembahasan Box -->
+                <div id="feedbackDiscussionBox" class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs md:text-sm text-slate-700 space-y-2 max-h-60 overflow-y-auto">
+                    <div class="font-bold text-slate-800 flex items-center">
+                        <span class="mr-1">📖</span> PEMBAHASAN MATERI:
+                    </div>
+                    <div id="feedbackDiscussionText" class="leading-relaxed">
+                        <!-- Discussion injected -->
+                    </div>
+                </div>
+
+                <button id="nextBtn" onclick="nextQuestion()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-heading font-bold text-lg py-3.5 rounded-2xl shadow-md transition btn-bounce">
+                    ➡️ LANJUTKAN
+                </button>
+            </div>
+        </div>
+
+        <!-- MODAL LEVEL UP -->
+        <div id="levelUpModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center space-y-5 border-4 border-amber-400 shadow-2xl">
+                <div class="text-6xl animate-bounce">🚀</div>
+                <h2 class="text-3xl font-extrabold font-heading text-amber-500">LEVEL UP!</h2>
+                <div id="levelUpDetails" class="text-slate-700 font-medium text-sm md:text-base">
+                    <!-- Level details -->
+                </div>
+                <button onclick="closeLevelUpModal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-heading font-bold text-lg py-3 rounded-2xl shadow-lg transition btn-bounce">
+                    🔥 SIAP TANTANGAN SELANJUTNYA!
+                </button>
+            </div>
+        </div>
+
+        <!-- 4. HALAMAN HASIL & SERTIFIKAT -->
+        <section id="resultScreen" class="hidden space-y-6">
+            <div class="glass-card rounded-3xl p-6 md:p-10 text-center space-y-6">
+                <div class="text-5xl">🏆</div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">PETUALANGAN SELESAI!</h2>
+                
+                <div class="bg-white/80 p-4 rounded-2xl border border-slate-200 inline-block text-left text-xs md:text-sm text-slate-700 space-y-1 shadow-sm">
+                    <p><strong>Nama:</strong> <span id="resName">-</span></p>
+                    <p><strong>Sekolah:</strong> <span id="resSchool">-</span></p>
+                    <p><strong>Kelas:</strong> VI SD</p>
+                    <p><strong>Waktu Pengerjaan:</strong> <span id="resTime">-</span></p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl text-center">
+                        <span class="text-xs font-bold text-emerald-600 block">NILAI AKHIR</span>
+                        <span id="resScore" class="text-2xl font-extrabold text-emerald-700 font-heading">0</span>
+                        <span class="text-xs text-emerald-500"> / 100</span>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 p-3 rounded-2xl text-center">
+                        <span class="text-xs font-bold text-blue-600 block">BENAR</span>
+                        <span id="resCorrect" class="text-2xl font-extrabold text-blue-700 font-heading">0</span>
+                        <span class="text-xs text-blue-500"> Soal</span>
+                    </div>
+                    <div class="bg-rose-50 border border-rose-200 p-3 rounded-2xl text-center">
+                        <span class="text-xs font-bold text-rose-600 block">SALAH</span>
+                        <span id="resWrong" class="text-2xl font-extrabold text-rose-700 font-heading">0</span>
+                        <span class="text-xs text-rose-500"> Soal</span>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 p-3 rounded-2xl text-center">
+                        <span class="text-xs font-bold text-amber-600 block">PERSENTASE</span>
+                        <span id="resPercent" class="text-2xl font-extrabold text-amber-700 font-heading">0%</span>
+                    </div>
+                </div>
+
+                <!-- Predikat Badge -->
+                <div class="bg-gradient-to-r from-amber-400 to-amber-500 text-white p-4 rounded-2xl shadow-md space-y-1">
+                    <span class="text-xs uppercase font-bold tracking-wider opacity-90">PREDIKAT PENCAPAIAN</span>
+                    <h3 id="resPredicate" class="text-xl md:text-2xl font-extrabold font-heading">PAHLAWAN TUBUH SEHAT</h3>
+                    <p id="resMotivation" class="text-xs md:text-sm opacity-95">Luar biasa! Kamu menguasai seluruh materi pencernaan dan pernapasan!</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    <button onclick="showCertificateModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-heading font-bold p-3.5 rounded-2xl shadow transition btn-bounce flex items-center justify-center space-x-2">
+                        <span>🏅 DAPATKAN SERTIFIKAT</span>
+                    </button>
+                    <button onclick="showFullDiscussionScreen()" class="bg-blue-500 hover:bg-blue-600 text-white font-heading font-bold p-3.5 rounded-2xl shadow transition btn-bounce flex items-center justify-center space-x-2">
+                        <span>📚 LIHAT SEMUA PEMBAHASAN</span>
+                    </button>
+                    <button onclick="restartGame()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-heading font-bold p-3.5 rounded-2xl shadow transition btn-bounce flex items-center justify-center space-x-2">
+                        <span>🔄 MAIN LAGI</span>
+                    </button>
+                    <button onclick="goHome()" class="bg-slate-600 hover:bg-slate-700 text-white font-heading font-bold p-3.5 rounded-2xl shadow transition btn-bounce flex items-center justify-center space-x-2">
+                        <span>🏠 KEMBALI KE BERANDA</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. HALAMAN PEMBAHASAN LENGKAP -->
+        <section id="discussionScreen" class="hidden space-y-6">
+            <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+                <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold font-heading text-slate-800">📚 Evaluasi & Discussion Center</h2>
+                        <p class="text-xs text-slate-500">Pelajari kembali 50 soal beserta kunci jawaban dan penjelasannya.</p>
+                    </div>
+                    <button onclick="backToResult()" class="bg-slate-700 hover:bg-slate-800 text-white font-heading text-xs font-bold px-4 py-2 rounded-xl btn-bounce">
+                        ⬅️ KEMBALI KE HASIL
+                    </button>
+                </div>
+
+                <div id="fullDiscussionList" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                    <!-- Dynamic Discussion Items -->
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL SERTIFIKAT & CANVAS -->
+        <div id="certificateModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+            <div class="bg-white rounded-3xl p-6 max-w-3xl w-full space-y-4 shadow-2xl relative">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h3 class="font-heading font-bold text-xl text-slate-800">🏅 Sertifikat Kelulusan IPAS Explorer</h3>
+                    <button onclick="closeCertificateModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl px-2">✕</button>
+                </div>
+
+                <!-- Canvas Preview -->
+                <div class="overflow-x-auto flex justify-center border rounded-2xl bg-slate-100 p-2">
+                    <canvas id="certCanvas" width="900" height="630" class="max-w-full h-auto rounded-xl shadow"></canvas>
+                </div>
+
+                <div class="flex flex-wrap justify-end gap-3 pt-2">
+                    <button onclick="downloadCertificate()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-heading font-bold px-6 py-3 rounded-xl shadow transition btn-bounce flex items-center space-x-2">
+                        <span>📥 DOWNLOAD SERTIFIKAT (PNG)</span>
+                    </button>
+                    <button onclick="closeCertificateModal()" class="bg-slate-500 hover:bg-slate-600 text-white font-heading font-bold px-5 py-3 rounded-xl transition btn-bounce">
+                        TUTUP
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white/80 border-t border-slate-200 py-3 text-center text-xs text-slate-500 font-semibold mt-6">
+        © Giga Innovation | 081329200985 - IPAS Explorer SD Kelas 6
+    </footer>
+
+    <!-- SCRIPT UTAMA PERMAINAN -->
+    <script>
+        let audioCtx = null;
+        let isSoundOn = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSynthTone(freq, type, duration, gainValue = 0.1) {
+            if (!isSoundOn) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(gainValue, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playSound(type) {
+            if (!isSoundOn) return;
+            initAudio();
+            if (type === 'correct') {
+                playSynthTone(523.25, 'sine', 0.15, 0.15); // C5
+                setTimeout(() => playSynthTone(659.25, 'sine', 0.15, 0.15), 100); // E5
+                setTimeout(() => playSynthTone(783.99, 'sine', 0.3, 0.15), 200); // G5
+            } else if (type === 'wrong') {
+                playSynthTone(220, 'sawtooth', 0.2, 0.15);
+                setTimeout(() => playSynthTone(185, 'sawtooth', 0.3, 0.15), 150);
+            } else if (type === 'levelup') {
+                [261, 329, 392, 523].forEach((f, i) => {
+                    setTimeout(() => playSynthTone(f, 'triangle', 0.2, 0.2), i * 120);
+                });
+            } else if (type === 'cert') {
+                [392, 523, 659, 783, 1046].forEach((f, i) => {
+                    setTimeout(() => playSynthTone(f, 'sine', 0.25, 0.15), i * 100);
+                });
+            }
+        }
+
+        function toggleSound() {
+            isSoundOn = !isSoundOn;
+            document.getElementById('soundIcon').innerText = isSoundOn ? '🔊' : '🔇';
+            document.getElementById('soundText').innerText = isSoundOn ? 'SUARA ON' : 'SUARA OFF';
+            document.getElementById('soundToggleBtn').className = isSoundOn 
+                ? 'flex items-center space-x-1 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-semibold px-3 py-1.5 rounded-full transition btn-bounce'
+                : 'flex items-center space-x-1 bg-slate-200 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full transition btn-bounce';
+        }
+
+        const ALL_QUESTIONS_DATA = [
+            // --- BAB 1: MAKANAN BERGIZI UNTUK KESEHATAN PENCERNAANKU (Q1 - Q25) ---
+            {
+                id: 1, bab: 1, level: 1, cog: 'L1', type: 'mc',
+                topic: 'Pencernaan - Mulut & Enzim',
+                question: 'Di dalam mulut terjadi pencernaan secara mekanis dan kimiawi. Enzim yang berfungsi mengubah zat tepung (amilum) menjadi gula (glukosa) adalah...',
+                options: ['Enzim Amilase (Ptiylin)', 'Enzim Pepsin', 'Enzim Renin', 'Asam Klorida (HCl)'],
+                answer: 0,
+                explanation: 'Enzim Amilase (Ptiylin) yang terdapat pada air liur berfungsi memecah karbohidrat kompleks/zat tepung menjadi glukosa sederhana.'
+            },
+            {
+                id: 2, bab: 1, level: 1, cog: 'L1', type: 'mc',
+                topic: 'Urutan Sistem Pencernaan',
+                question: 'Urutan saluran pencernaan manusia dari awal hingga akhir yang benar adalah...',
+                options: [
+                    'Mulut -> Kerongkongan -> Lambung -> Usus Halus -> Usus Besar -> Anus',
+                    'Mulut -> Tenggorokan -> Lambung -> Usus Besar -> Usus Halus -> Anus',
+                    'Mulut -> Kerongkongan -> Usus Halus -> Lambung -> Usus Besar -> Anus',
+                    'Mulut -> Lambung -> Kerongkongan -> Usus Halus -> Usus Besar -> Anus'
+                ],
+                answer: 0,
+                explanation: 'Urutan yang tepat dimulai dari Mulut, melewati Kerongkongan (Oesofagus), Lambung, Penyerapan nutrisi di Usus Halus, Penyerapan air di Usus Besar, lalu pengeluaran di Anus.'
+            },
+            {
+                id: 3, bab: 1, level: 1, cog: 'L2', type: 'tf',
+                topic: 'Gerak Peristaltik',
+                question: 'Gerakan meremas-remas dan mendorong makanan yang dilakukan oleh dinding kerongkongan menuju lambung disebut gerak peristaltik.',
+                options: ['BENAR', 'SALAH'],
+                answer: 0,
+                explanation: 'Pernyataan BENAR. Dinding kerongkongan melakukan gerak peristaltik untuk mendorong gumpalan makanan (bolus) masuk ke dalam lambung.'
+            },
+            {
+                id: 4, bab: 1, level: 1, cog: 'L2', type: 'mc',
+                topic: 'Fungsi Asam Lambung',
+                question: 'Lambung menghasilkan Asam Klorida (HCl). Fungsi utama dari HCl di dalam lambung adalah...',
+                options: [
+                    'Membunuh kuman penyakit yang masuk bersama makanan dan mengaktifkan pepsinogen',
+                    'Mengubah protein menjadi asam amino secara langsung',
+                    'Menggumpalkan protein susu (kasein)',
+                    'Menyerap air dan mineral hasil pencernaan'
+                ],
+                answer: 0,
+                explanation: 'Asam klorida (HCl) menciptakan suasana asam di lambung yang berfungsi membunuh mikroorganisme bahaya dan mengaktifkan pepsinogen menjadi enzim pepsin.'
+            },
+            {
+                id: 5, bab: 1, level: 1, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Gangguan Usus Halus',
+                question: 'Seorang pasien mengalami gangguan pada fili (jonjot usus) di usus halusnya sehingga permukaannya rusak. Dampak utama yang akan dialami tubuh pasien tersebut adalah...',
+                options: [
+                    'Proses penyerapan sari-sari makanan menjadi tidak maksimal sehingga tubuh lemas dan kekurangan gizi',
+                    'Proses pencernaan mekanis makanan terhenti total',
+                    'Makanan tidak bisa terdorong ke usus besar',
+                    'Pembentukan feses menjadi terlalu cepat dan cair'
+                ],
+                answer: 0,
+                explanation: 'Fili atau jonjot usus halus berfungsi memperluas bidang penyerapan nutrisi. Jika fili rusak, penyerapan sari makanan terganggu sehingga tubuh lemas dan berisiko malnutrisi.'
+            },
+            {
+                id: 6, bab: 1, level: 1, cog: 'L1', type: 'mc',
+                topic: 'Zat Gizi - Karbohidrat',
+                question: 'Zat gizi yang berfungsi sebagai sumber energi utama bagi tubuh manusia untuk beraktivitas sehari-hari adalah...',
+                options: ['Karbohidrat', 'Protein', 'Vitamin C', 'Kalsium'],
+                answer: 0,
+                explanation: 'Karbohidrat (terdapat pada nasi, jagung, sagu, roti) adalah sumber energi utama tubuh.'
+            },
+            {
+                id: 7, bab: 1, level: 1, cog: 'L2', type: 'mc',
+                topic: 'Zat Gizi - Protein',
+                question: 'Ibu memasak ikan, tahu, dan telur untuk menu makan siang. Bahan-bahan makanan tersebut kaya akan protein yang berfungsi untuk...',
+                options: [
+                    'Pembangunan sel tubuh baru dan mengganti jaringan tubuh yang rusak',
+                    'Menjaga suhu tubuh agar tetap hangat saat dingin',
+                    'Melarutkan vitamin A, D, E, dan K',
+                    'Mencegah penyakit sariawan dan gusi berdarah'
+                ],
+                answer: 0,
+                explanation: 'Protein (hewani maupun nabati) adalah zat pembangun yang dibutuhkan untuk pertumbuhan dan perbaikan sel tubuh yang rusak.'
+            },
+            {
+                id: 8, bab: 1, level: 1, cog: 'L2', type: 'mc',
+                topic: 'Vitamin & Daya Tahan',
+                question: 'Siti sering mengalami sariawan dan gusi berdarah. Buah yang paling tepat dikonsumsi Siti untuk mengatasi keluhan tersebut karena kaya Vitamin C adalah...',
+                options: ['Jeruk dan Jambu Biji', 'Daging sapi dan Ayam', 'Nasi dan Singkong', 'Minyak Kelapa dan Mentega'],
+                answer: 0,
+                explanation: 'Vitamin C menjaga daya tahan tubuh dan memelihara jaringan gusi/mulut. Jeruk dan jambu biji sangat kaya akan Vitamin C.'
+            },
+            {
+                id: 9, bab: 1, level: 1, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Menu Gizi Seimbang',
+                question: 'Perhatikan menu sarapan berikut:\nMenu A: Nasi goreng, mi goreng, kerupuk, teh manis.\nMenu B: Nasi putih, tumis kangkung, tempe goreng, ikan bakar, dan air putih.\n\nAnalisis menu sarapan yang paling sehat sesuai panduan Gizi Seimbang adalah...',
+                options: [
+                    'Menu B, karena mengandung karbohidrat, serat/vitamin, protein nabati, protein hewani, dan air secukupnya',
+                    'Menu A, karena memberikan energi karbohidrat ganda yang melimpah',
+                    'Menu A, karena lebih cepat dikonsumsi anak sekolah',
+                    'Kedua menu sama baiknya untuk pertumbuhan'
+                ],
+                answer: 0,
+                explanation: 'Menu B lengkap dan seimbang (karbohidrat, serat, vitamin, protein hewani & nabati) tanpa kelebihan karbohidrat dan minyak berlebih seperti pada Menu A.'
+            },
+            {
+                id: 10, bab: 1, level: 1, cog: 'L1', type: 'mc',
+                topic: 'Penyakit Pencernaan - Konstipasi',
+                question: 'Andi merasa kesusahan saat buang air besar karena fesesnya sangat keras dan kering. Gangguan pencernaan ini dinamakan...',
+                options: ['Konstipasi (Sembelit)', 'Diare', 'Maag', 'Apendisitis'],
+                answer: 0,
+                explanation: 'Konstipasi (sembelit) terjadi ketika usus besar menyerap terlalu banyak air dari feses akibat kurang konsumsi makanan berserat dan kurang minum air.'
+            },
+            
+            // Level 2 (Q11-Q20)
+            {
+                id: 11, bab: 1, level: 2, cog: 'L2', type: 'mc',
+                topic: 'Penyakit Maag & Asam Lambung',
+                question: 'Penyakit Maag Ditandai rasa perih dan mual di perut atas. Penyebab utama munculnya Maag adalah...',
+                options: [
+                    'Pola makan tidak teratur sehingga asam lambung mengikis dinding lambung',
+                    'Infeksi bakteri pada usus buntu',
+                    'Terlalu banyak makan buah berserat tinggi',
+                    'Kurang minum air putih saat berolahraga'
+                ],
+                answer: 0,
+                explanation: 'Makan terlambat menyebabkan asam lambung (HCl) memproduksi asam tanpa ada makanan yang dicerna, sehingga mengiritasi dinding lambung.'
+            },
+            {
+                id: 12, bab: 1, level: 2, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Kasus Penanganan Diare',
+                question: 'Boni mengalami buang air besar terus menerus dengan kondisi feses yang cair. Langkah pertolongan pertama yang paling tepat untuk mencegah dehidrasi pada Boni adalah...',
+                options: [
+                    'Memberikan larutan Oralit (campuran air, garam, dan gula)',
+                    'Memberikan makanan pedas agar bakteri mati',
+                    'Melarang Boni minum air putih sampai BAB berhenti',
+                    'Memberikan mi instan hangat'
+                ],
+                answer: 0,
+                explanation: 'Oralit menggantikan cairan dan elektrolit tubuh yang hilang secara drastis saat terjadi diare untuk mencegah dehidrasi berbahaya.'
+            },
+            {
+                id: 13, bab: 1, level: 2, cog: 'L1', type: 'mc',
+                topic: 'Fungsi Usus Besar',
+                question: 'Fungsi utama usus besar dalam proses pencernaan manusia adalah...',
+                options: [
+                    'Menyerap air dari sisa makanan dan membentuk feses dengan bantuan bakteri baik',
+                    'Mencerna makanan secara kimiawi dengan enzim amilase',
+                    'Menyerap sari-sari makanan ke dalam pembuluh darah',
+                    'Menghancurkan makanan keras dengan otot dindingnya'
+                ],
+                answer: 0,
+                explanation: 'Usus besar mengatur kadar air sisa pencernaan dan membusukkan sisa makanan menjadi feses dibantu bakteri *Escherichia coli*.'
+            },
+            {
+                id: 14, bab: 1, level: 2, cog: 'L2', type: 'mc',
+                topic: 'Pentingnya Mengunyah Makanan',
+                question: 'Mengapa kita dianjurkan untuk mengunyah makanan secara perlahan hingga halus sebelum ditelan?',
+                options: [
+                    'Meringankan kerja lambung dan memperluas permukaan makanan agar enzim bekerja maksimal',
+                    'Agar makanan langsung terserap di dalam kerongkongan',
+                    'Agar usus besar tidak perlu menyerap air lagi',
+                    'Mencegah naiknya asam lambung ke paru-paru'
+                ],
+                answer: 0,
+                explanation: 'Mengunyah hingga halus (pencernaan mekanis) mempermudah enzim pencernaan memproses makanan di lambung dan usus.'
+            },
+            {
+                id: 15, bab: 1, level: 2, cog: 'L2', type: 'mc',
+                topic: 'Peran Air Bagi Pencernaan',
+                question: 'Manfaat utama minum air putih minimal 8 gelas sehari bagi organ pencernaan adalah...',
+                options: [
+                    'Membantu melarutkan nutrisi dan melancarkan pergerakan makanan di saluran pencernaan',
+                    'Menggantikan fungsi asam lambung',
+                    'Membunuh semua bakteri di usus besar',
+                    'Menambah berat badan secara cepat'
+                ],
+                answer: 0,
+                explanation: 'Air membantu melarutkan zat gizi, mencegah konstipasi, dan melancarkan pelumasan saluran organ pencernaan.'
+            },
+            {
+                id: 16, bab: 1, level: 2, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Analisis Pola Makan',
+                question: 'Edo sering mengonsumsi makanan cepat saji (junk food) tinggi lemak dan kurang makan sayur. Jika kebiasaan ini berlanjut bertahun-tahun, risiko yang mungkin timbul adalah...',
+                options: [
+                    'Mengalami konstipasi kronis dan peningkatan risiko kegemukan (obesitas)',
+                    'Paru-paru mengecil dan batuk berdahak',
+                    'Enzim lambung berhenti diproduksi selamanya',
+                    'Daya tangkap otak meningkat pesat'
+                ],
+                answer: 0,
+                explanation: 'Junk food tinggi kalori lemak tetapi sangat minim serat, menyebabkan masalah pencernaan (konstipasi) serta obesitas.'
+            },
+            {
+                id: 17, bab: 1, level: 2, cog: 'L1', type: 'mc',
+                topic: 'Fungsi Lemak Sehat',
+                question: 'Selain sebagai cadangan energi, fungsi zat gizi Lemak bagi tubuh adalah...',
+                options: [
+                    'Melindung organ tubuh dari benturan dan menjaga suhu tubuh',
+                    'Mengganti sel kulit yang rusak secara cepat',
+                    'Membentuk sel darah merah',
+                    'Mencegah penyakit gondok'
+                ],
+                answer: 0,
+                explanation: 'Lemak berfungsi sebagai pelindung organ dalam, pelarut vitamin A,D,E,K, serta isolator suhu panas tubuh.'
+            },
+            {
+                id: 18, bab: 1, level: 2, cog: 'L2', type: 'mc',
+                topic: 'Identifikasi Serat Pangan',
+                question: 'Kelompok bahan makanan berikut yang paling efektif untuk melancarkan buang air besar karena kaya akan serat adalah...',
+                options: [
+                    'Bayam, pepaya, oatmeal, dan apel',
+                    'Daging sapi, keju, dan telur rebus',
+                    'Nasi putih, tepung terigu, dan gula pasir',
+                    'Minyak goreng, mentega, dan gajih'
+                ],
+                answer: 0,
+                explanation: 'Sayuran (bayam), buah-buahan (pepaya, apel), dan biji-bijian (oatmeal) merupakan sumber serat pangan tinggi.'
+            },
+            {
+                id: 19, bab: 1, level: 2, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Kasus Anemia',
+                question: 'Lani sering terlihat pucat, cepat pusing, dan lemas saat mengikuti upacara bendera. Dokter menyatakan Lani menderita Anemia (kurang darah). Makanan yang sebaiknya ditingkatkan dalam diet Lani adalah...',
+                options: [
+                    'Sayuran hijau (seperti kangkung/bayam) dan hati ayam yang kaya zat besi',
+                    'Es krim dan cokelat manis',
+                    'Keripik kentang goreng',
+                    'Air kelapa muda beres'
+                ],
+                answer: 0,
+                explanation: 'Anemia disebabkan kekurangan zat besi penyusun hemoglobin. Sayuran hijau dan hati kaya akan zat besi.'
+            },
+            {
+                id: 20, bab: 1, level: 2, cog: 'L1', type: 'mc',
+                topic: 'Enzim Lambung',
+                question: 'Enzim Pepsin dan Renin diproduksi di dalam organ pencernaan...',
+                options: ['Lambung', 'Mulut', 'Usus Halus', 'Kantung Empedu'],
+                answer: 0,
+                explanation: 'Lambung menghasilkan getah lambung yang mengandung HCl, Pepsin (mengubah protein jadi pepton), dan Renin (menggumpalkan kasein susu).'
+            },
+
+            // Level 3 (Q21-Q25)
+            {
+                id: 21, bab: 1, level: 3, cog: 'L2', type: 'mc',
+                topic: 'Dampak Makanan Pedas',
+                question: 'Mengonsumsi makanan yang terlalu pedas dan asam secara berlebihan dapat merangsang lambung untuk...',
+                options: [
+                    'Memproduksi asam lambung berlebih sehingga dinding lambung teriritasi',
+                    'Menghasilkan enzim amilase yang merusak usus',
+                    'Menghentikan penyerapan air di usus besar',
+                    'Membuat gigi cepat keropos'
+                ],
+                answer: 0,
+                explanation: 'Sifat asam dan cabai merangsang produksi asam berlebih yang dapat memicu nyeri ulu hati dan maag.'
+            },
+            {
+                id: 22, bab: 1, level: 3, cog: 'L2', type: 'mc',
+                topic: 'Bakteri E. coli',
+                question: 'Peran menguntungkan dari bakteri *Escherichia coli* yang hidup di usus besar manusia adalah...',
+                options: [
+                    'Membantu pembusukan sisa makanan dan membentuk Vitamin K',
+                    'Mencerna lemak menjadi asam lemak',
+                    'Membunuh kuman di lambung',
+                    'Menyerap glukosa ke pembuluh darah'
+                ],
+                answer: 0,
+                explanation: '*E. coli* membantu pembusukan sisa makanan serta menghasilkan Vitamin K yang berguna untuk pembekuan darah.'
+            },
+            {
+                id: 23, bab: 1, level: 3, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Pencernaan Mekanis vs Kimiawi',
+                question: 'Perbedaan utama antara pencernaan mekanis dan pencernaan kimiawi adalah...',
+                options: [
+                    'Mekanis mengubah ukuran fisik makanan (dikunyah/diremas), sedangkan kimiawi menggunakan enzim untuk memecah molekul zat gizi',
+                    'Mekanis terjadi di usus, sedangkan kimiawi hanya terjadi di mulut',
+                    'Mekanis membutuhkan air, sedangkan kimiawi membutuhkan udara',
+                    'Mekanis terjadi pada malam hari, sedangkan kimiawi pada siang hari'
+                ],
+                answer: 0,
+                explanation: 'Pencernaan mekanis memotong/menghaluskan bentuk fisik makanan, sementara pencernaan kimiawi melibatkan enzim memecah molekul kompleks menjadi molekul sederhana.'
+            },
+            {
+                id: 24, bab: 1, level: 3, cog: 'L1', type: 'mc',
+                topic: 'Jenis Gigi & Fungsi',
+                question: 'Jenis gigi yang berbentuk runcing dan berfungsi untuk merobek makanan seperti daging adalah...',
+                options: ['Gigi Taring', 'Gigi Seri', 'Gigi Geraham Depan', 'Gigi Geraham Belakang'],
+                answer: 0,
+                explanation: 'Gigi taring berbentuk runcing untuk merobek/mencabik makanan keras atau berdaging.'
+            },
+            {
+                id: 25, bab: 1, level: 3, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Solusi Kesehatan Pencernaan',
+                question: 'Roni sering terburu-buru saat makan pagi, kurang minum air, dan jarang makan buah. Solusi terbaik yang bisa kamu sarankan pada Roni agar sistem pencernaannya sehat adalah...',
+                options: [
+                    'Makan dengan tenang dan dikunyah halus, cukupi minum air putih, serta menambah asupan serat buah/sayur',
+                    'Langsung minum obat maag setiap hari sebelum makan',
+                    'Mengganti semua makanan dengan jus buah saja',
+                    'Makan satu kali sehari saja dalam porsi sangat besar'
+                ],
+                answer: 0,
+                explanation: 'Makan perlahan, mengunyah halus, serta porsi air dan serat yang cukup adalah tindakan preventif terbaik untuk organ pencernaan.'
+            },
+
+            // --- BAB 2: TARIK DAN HEMBUSKAN (Q26 - Q50) ---
+            // Level 4 (Q26-Q35)
+            {
+                id: 26, bab: 2, level: 4, cog: 'L1', type: 'mc',
+                topic: 'Organ Pernapasan - Hidung',
+                question: 'Organ pertama yang dilalui udara saat kita menghirup napas adalah rongga hidung. Di dalam hidung, udara mengalami proses...',
+                options: [
+                    'Penyaringan debu oleh rambut hidung, penyesuaian suhu, dan pelembapan',
+                    'Pertukaran gas oksigen dengan karbondioksida',
+                    'Penyerapan nutrisi udara oleh pembuluh darah',
+                    'Pencampuran udara dengan asam hidroklida'
+                ],
+                answer: 0,
+                explanation: 'Rambut hidung menyaring debu/kotoran, sedangkan selaput lendir menyesuaikan suhu tubuh dan kelembapan udara yang masuk.'
+            },
+            {
+                id: 27, bab: 2, level: 4, cog: 'L1', type: 'mc',
+                topic: 'Fungsi Rambut Hidung',
+                question: 'Rambut-rambut halus yang terdapat di dalam rongga hidung berfungsi untuk...',
+                options: [
+                    'Menyaring kotoran dan debu yang terbawa oleh udara',
+                    'Menghangatkan udara dingin',
+                    'Menghasilkan oksigen murni',
+                    'Menahan napas agar tidak keluar'
+                ],
+                answer: 0,
+                explanation: 'Rambut hidung bertindak sebagai filter fisik awal untuk menyaring kotoran dari udara luar.'
+            },
+            {
+                id: 28, bab: 2, level: 4, cog: 'L2', type: 'mc',
+                topic: 'Jalur Udara Pernapasan',
+                question: 'Urutan saluran pernapasan manusia saat menghirup udara (Inhalasi) dari luar ke dalam paru-paru adalah...',
+                options: [
+                    'Rongga Hidung -> Faring/Laring -> Trakea (Tenggorokan) -> Bronkus -> Bronkiolus -> Alveolus',
+                    'Rongga Hidung -> Kerongkongan -> Bronkus -> Paru-paru -> Alveolus',
+                    'Rongga Hidung -> Trakea -> Faring -> Alveolus -> Bronkus',
+                    'Rongga Hidung -> Alveolus -> Bronkus -> Trakea'
+                ],
+                answer: 0,
+                explanation: 'Udara masuk Hidung -> Faring/Laring -> Trakea -> Cabang Bronkus -> Cabang halus Bronkiolus -> Kantung Alveolus.'
+            },
+            {
+                id: 29, bab: 2, level: 4, cog: 'L2', type: 'svg_mc',
+                topic: 'Fungsi Alveolus',
+                svg: `<svg class="w-32 h-32 mx-auto" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="#fecdd3" stroke="#f43f5e" stroke-width="3"/><circle cx="35" cy="40" r="10" fill="#fda4af"/><circle cx="65" cy="40" r="12" fill="#fda4af"/><circle cx="50" cy="65" r="15" fill="#fda4af"/><path d="M 20 50 Q 50 20 80 50" stroke="#0284c7" stroke-width="3" fill="none"/></svg>`,
+                question: 'Gambar di atas mengilustrasikan kantung udara halus di dalam paru-paru (Alveolus). Bagian ini sangat penting karena tempat terjadinya...',
+                options: [
+                    'Pertukaran gas Oksigen (O2) dan Karbondioksida (CO2)',
+                    'Penyaringan debu tahap akhir',
+                    'Penyimpanan cadangan air pernapasan',
+                    'Pengaturan irama denyut jantung'
+                ],
+                answer: 0,
+                explanation: 'Di Alveolus yang dikelilingi pembuluh kapiler terjadi difusi pertukaran Oksigen (diikat darah) dan Karbondioksida (dibuang).'
+            },
+            {
+                id: 30, bab: 2, level: 4, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Mekanisme Diafragma',
+                question: 'Saat kita menarik napas dalam-dalam (Inspirasi), kondisi otot diafragma dan rongga dada yang benar adalah...',
+                options: [
+                    'Diafragma berkontraksi mendatar, tulang rusuk terangkat, dan rongga dada membesar',
+                    'Diafragma melengkung ke atas, tulang rusuk turun, dan rongga dada mengecil',
+                    'Diafragma mengendur dan paru-paru mengempis total',
+                    'Tidak ada perubahan pada diafragma'
+                ],
+                answer: 0,
+                explanation: 'Saat inspirasi, diafragma berkontraksi (mendatar), otot antar tulang rusuk berkontraksi (dada terangkat), menyebabkan volume dada membesar dan tekanan udara turun sehingga udara masuk.'
+            },
+            {
+                id: 31, bab: 2, level: 4, cog: 'L1', type: 'mc',
+                topic: 'Gas Pernapasan',
+                question: 'Gas dari udara bersih yang sangat dibutuhkan sel-sel tubuh manusia untuk proses pembakaran energi adalah...',
+                options: ['Oksigen (O2)', 'Karbondioksida (CO2)', 'Nitrogen (N2)', 'Karbonmonoksida (CO)'],
+                answer: 0,
+                explanation: 'Oksigen (O2) diperlukan untuk metabolisme sel dalam menghasilkan energi bagi tubuh.'
+            },
+            {
+                id: 32, bab: 2, level: 4, cog: 'L2', type: 'mc',
+                topic: 'Pentingnya Pohon & Udara Bersih',
+                question: 'Menanam banyak pohon hijau di halaman sekolah dapat membuat udara sekitar terasa sangat segar. Hal ini terjadi karena tumbuhan menghasilkan...',
+                options: [
+                    'Gas Oksigen (O2) dari proses fotosintesis pada siang hari',
+                    'Gas Karbondioksida yang menyegarkan',
+                    'Uap nitrogen pendingin udara',
+                    'Angin kencang secara konstan'
+                ],
+                answer: 0,
+                explanation: 'Proses fotosintesis tumbuhan hijau menyerap CO2 dan melepaskan O2 bersih ke lingkungan sekitar.'
+            },
+            {
+                id: 33, bab: 2, level: 4, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Bahaya Asap Rokok',
+                question: 'Deni tidak merokok, tetapi ayahnya sering merokok di dalam rumah. Deni dikategorikan sebagai "Perokok Pasif". Dampak bahaya yang mengintai Deni adalah...',
+                options: [
+                    'Sama berbahaya dengan perokok aktif karena terhirup zat beracun seperti tar dan nikotin yang dapat merusak paru-paru',
+                    'Tidak berdampak apa-apa karena Deni tidak memegang rokok',
+                    'Membuat paru-paru Deni menjadi makin kuat terhadap racun',
+                    'Hanya menyebabkan bau baju kurang sedap tanpa masalah kesehatan'
+                ],
+                answer: 0,
+                explanation: 'Perokok pasif menghirup asap sampingan yang mengandung konsentrasi zat berbahaya (tar, nikotin, CO) tinggi, berisiko terkena penyakit ISPA dan kanker paru.'
+            },
+            {
+                id: 34, bab: 2, level: 4, cog: 'L2', type: 'mc',
+                topic: 'Penyakit Asma',
+                question: 'Penyakit pernapasan yang ditandai dengan penyempitan saluran napas akibat alergi debu, udara dingin, atau stres dinamakan...',
+                options: ['Asma', 'Influenza', 'TBC', 'Sariawan'],
+                answer: 0,
+                explanation: 'Asma adalah gangguan penyempitan saluran pernapasan (bronkus/bronkiolus) pemicunya biasa karena alergen debu, bulu hewan, atau suhu dingin.'
+            },
+            {
+                id: 35, bab: 2, level: 4, cog: 'L1', type: 'mc',
+                topic: 'Istilah ISPA',
+                question: 'Kepanjangan dari gangguan pernapasan ISPA yang sering melanda saat musim kemarau berdebu adalah...',
+                options: [
+                    'Infeksi Saluran Pernapasan Akut',
+                    'Ikatan Saluran Paru Paru Aman',
+                    'Infeksi Sel Paru Paru Aktif',
+                    'Iritasi Saluran Pencernaan Akut'
+                ],
+                answer: 0,
+                explanation: 'ISPA singkatan dari Infeksi Saluran Pernapasan Akut, menyerang hidung, tenggorokan hingga paru-paru.'
+            },
+
+            // Level 5 (Q36-Q50)
+            {
+                id: 36, bab: 2, level: 5, cog: 'L2', type: 'mc',
+                topic: 'Dampak Polusi Kendaraan',
+                question: 'Asap pembuangan dari kendaraan bermotor mengandung gas berbahaya Karbonmonoksida (CO). Bahaya gas CO jika terhirup manusia adalah...',
+                options: [
+                    'Mengikat hemoglobin darah lebih kuat dibanding oksigen sehingga tubuh kekurangan oksigen',
+                    'Membuat saluran pencernaan tersumbat',
+                    'Menyebabkan kadar gula darah melonjak tinggi',
+                    'Merusak otot kaki dan tangan'
+                ],
+                answer: 0,
+                explanation: 'Gas CO cepat bereaksi mengikat hemoglobin sel darah merah, menyulitkan darah membawa oksigen ke seluruh organ tubuh.'
+            },
+            {
+                id: 37, bab: 2, level: 5, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Tindakan Kebakaran Hutan / Kabut Asap',
+                question: 'Suatu daerah dilanda kabut asap tebal akibat kebakaran hutan. Tindakan pencegahan terbaik yang harus dilakukan warga saat beraktivitas di luar rumah adalah...',
+                options: [
+                    'Memakai masker medis/N95 yang basah/lembab dan mengurangi aktivitas luar ruang',
+                    'Berlari kencang tanpa menggunakan penutup hidung',
+                    'Menghirup napas lewat mulut secara dalam-dalam',
+                    'Menggunakan kacamata renang saja'
+                ],
+                answer: 0,
+                explanation: 'Masker standar N95/medis menyaring partikel halus asap (PM2.5) agar tidak merusak kantung udara di paru-paru.'
+            },
+            {
+                id: 38, bab: 2, level: 5, cog: 'L1', type: 'mc',
+                topic: 'Trakea & Silia',
+                question: 'Batang tenggorokan (Trakea) dilapisi oleh sel-sel bersilia. Fungsi rambut silia pada trakea tersebut adalah...',
+                options: [
+                    'Mendorong keluar kotoran dan debu yang lolos dari penyaringan hidung',
+                    'Menyerap oksigen langsung ke dalam tulang',
+                    'Mencerna sisa makanan yang tersedak',
+                    'Menghasilkan bunyi suara tinggi'
+                ],
+                answer: 0,
+                explanation: 'Rambut silia pada Trakea bergetar untuk menyapu kotoran/bakteri asing ke atas agar terbuang saat batuk atau dahak.'
+            },
+            {
+                id: 39, bab: 2, level: 5, cog: 'L2', type: 'mc',
+                topic: 'Bronkus & Percabangan',
+                question: 'Saluran tenggorokan bercabang dua menuju paru-paru kanan dan paru-paru kiri. Cabang utama tenggorokan tersebut bernama...',
+                options: ['Bronkus', 'Bronkiolus', 'Alveolus', 'Faring'],
+                answer: 0,
+                explanation: 'Trakea membelah menjadi 2 cabang utama yang disebut Bronkus (Bronkus kanan & kiri).'
+            },
+            {
+                id: 40, bab: 2, level: 5, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Lari & Frekuensi Napas',
+                question: 'Setelah berlari keliling lapangan 5 kali, frekuensi bernapas Doni menjadi sangat cepat dan terengah-engah. Hal ini terjadi karena...',
+                options: [
+                    'Otot tubuh bekerja keras membutuhkan pasokan Oksigen lebih banyak dan cepat untuk pembentukan energi',
+                    'Paru-paru Doni sedang tersumbat air',
+                    'Jantung Doni berhenti berdenyut sementara',
+                    'Jumlah karbondioksida di udara sekitar mendadak hilang'
+                ],
+                answer: 0,
+                explanation: 'Aktivitas fisik tinggi membakar banyak energi, sehingga sel tubuh memerlukan asupan Oksigen berlipat ganda, memaksa paru-paru memompa napas lebih cepat.'
+            },
+            {
+                id: 41, bab: 2, level: 5, cog: 'L1', type: 'mc',
+                topic: 'Penyakit TBC',
+                question: 'Penyakit menular TBC (Tuberkulosis) yang menyerang organ paru-paru disebabkan oleh infeksi...',
+                options: [
+                    'Bakteri *Mycobacterium tuberculosis*',
+                    'Virus Influenza A',
+                    'Jamur Kulit',
+                    'Kurang minum air hangat'
+                ],
+                answer: 0,
+                explanation: 'TBC disebabkan oleh serangan infeksi bakteri *Mycobacterium tuberculosis* pada jaringan paru-paru.'
+            },
+            {
+                id: 42, bab: 2, level: 5, cog: 'L2', type: 'mc',
+                topic: 'Ventilasi Ruangan',
+                question: 'Setiap ruang kelas sekolah idealnya memiliki jendela dan sirkulasi ventilasi udara yang memadai. Tujuan utamanya adalah...',
+                options: [
+                    'Menjaga pertukaran udara segar kaya oksigen dan mencegah kelembapan penyebab kuman',
+                    'Agar murid bisa melihat pemandangan luar saat pelajaran',
+                    'Membiarkan debu jalanan masuk ke dalam kelas',
+                    'Mempercepat suara guru memantul'
+                ],
+                answer: 0,
+                explanation: 'Ventilasi yang baik menjamin sirkulasi pergantian CO2 dengan O2 segar serta mengurangi kelembapan pemicu bakteri.'
+            },
+            {
+                id: 43, bab: 2, level: 5, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Skenario Rute Jalan',
+                question: 'Ayu hendak berangkat sekolah naik sepeda. Terdapat dua pilihan jalur:\nJalur A: Melewati jalan raya besar yang penuh asap truk dan pabrik.\nJalur B: Melewati taman kota dan pemukiman rindang pepohonan.\n\nAnalisis rute yang paling menyehatkan bagi paru-paru Ayu adalah...',
+                options: [
+                    'Jalur B, karena paparan polusi asap minim dan udara dipenuhi O2 segar dari pepohonan',
+                    'Jalur A, agar cepat sampai tanpa peduli asap',
+                    'Kedua jalur sama saja dampaknya bagi paru-paru',
+                    'Jalur A, karena asap kendaraan bagus untuk melatih kekebalan napas'
+                ],
+                answer: 0,
+                explanation: 'Jalur B melindungi organ pernapasan dari iritan asap buangan pabrik/kendaraan bermotor.'
+            },
+            {
+                id: 44, bab: 2, level: 5, cog: 'L2', type: 'tf',
+                topic: 'Masker saat Berdebu',
+                question: 'Memakai masker saat berkendara di jalan raya yang kering dan berdebu merupakan salah satu tindakan pencegahan penyakit pernapasan.',
+                options: ['BENAR', 'SALAH'],
+                answer: 0,
+                explanation: 'Pernyataan BENAR. Masker berfungsi menyaring debu dan mikropartikel kotoran agar tidak masuk ke trakea dan alveolus.'
+            },
+            {
+                id: 45, bab: 2, level: 5, cog: 'L1', type: 'mc',
+                topic: 'Selaput Paru-Paru',
+                question: 'Paru-paru manusia dilindungi oleh pembungkus selaput tipis bertingkat yang dinamakan...',
+                options: ['Pleura', 'Perikardium', 'Peritoneum', 'Meninges'],
+                answer: 0,
+                explanation: 'Pleura adalah selaput pembungkus ganda yang melindungi paru-paru dari gesekan dengan dinding dada.'
+            },
+            {
+                id: 46, bab: 2, level: 5, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Kasus Pembakaran Sampah',
+                question: 'Tetangga sebelah rumah sering membakar sampah plastik di sore hari. Asapnya sering masuk ke dalam rumah. Langkah bijak yang dapat dilakukan keluarga adalah...',
+                options: [
+                    'Menutup pintu/jendela rumah dan menyampaikan edukasi secara sopan tentang bahaya pembakaran plastik',
+                    'Membakar sampah balik di depan rumah tetangga',
+                    'Menghirup asapnya agar terbiasa',
+                    'Mendiamkan saja meski batuk-batuk'
+                ],
+                answer: 0,
+                explanation: 'Asap plastik mengandung dioksin yang teratogenik dan karsinogenik. Tindakan preventifnya adalah menutup akses asap serta memberi pemahaman sopan.'
+            },
+            {
+                id: 47, bab: 2, level: 5, cog: 'L2', type: 'mc',
+                topic: 'Istirahat & Kesehatan Raga',
+                question: 'Bagaimana pengaruh istirahat dan tidur cukup (8-9 jam per hari bagi anak) terhadap organ pernapasan dan ketahanan tubuh?',
+                options: [
+                    'Memberikan waktu bagi sel-sel organ pernapasan memulihkan diri dan meningkatkan sistem imun',
+                    'Menyebabkan paru-paru terendam air',
+                    'Mengurangi pasokan oksigen ke otak secara drastis',
+                    'Membuat dada menjadi sesak saat bangun'
+                ],
+                answer: 0,
+                explanation: 'Tidur memulihkan stamina, memperbaiki jaringan yang rusak, dan mengoptimalkan fungsi imunitas tubuh.'
+            },
+            {
+                id: 48, bab: 2, level: 5, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Bernapas via Hidung vs Mulut',
+                question: 'Mengapa bernapas menggunakan hidung jauh lebih baik dan aman bagi kesehatan dibandingkan bernapas melalui mulut?',
+                options: [
+                    'Karena di hidung terdapat rambut dan mukus penyaring kotoran serta pengatur suhu, sedangkan mulut tidak memilikinya',
+                    'Karena mulut hanya digunakan untuk berbicara',
+                    'Karena bernapas lewat mulut dapat menyebabkan gigi copot',
+                    'Karena volume udara hidung 10 kali lebih besar dari mulut'
+                ],
+                answer: 0,
+                explanation: 'Mulut tidak memiliki rambut penyaring dan pengatur kelembapan, sehingga udara kotor/dingin bisa langsung masuk melukai paru-paru.'
+            },
+            {
+                id: 49, bab: 2, level: 5, cog: 'L2', type: 'mc',
+                topic: 'Proses Ekshalasi',
+                question: 'Saat kita menghembuskan napas (Ekshalasi), gas yang dikeluarkan dari dalam paru-paru menuju luar tubuh mengandung banyak...',
+                options: ['Karbondioksida (CO2) dan uap air', 'Oksigen murni', 'Gas Nitrogen padat', 'Gas Hidrogen'],
+                answer: 0,
+                explanation: 'Ekshalasi membuang gas sisa metabolisme berupa Karbondioksida (CO2) dan uap air (H2O).'
+            },
+            {
+                id: 50, bab: 2, level: 5, cog: 'L3', type: 'mc',
+                topic: 'HOTS - Rencana Gaya Hidup Sehat Utuh',
+                question: 'Berikut adalah daftar kebiasaan sehari-hari:\n1. Rajin berolahraga teratur\n2. Gemar makan sayur dan buah\n3. Memakai masker di lingkungan berdebu\n4. Merokok di tempat umum\n5. Tidur larut malam\n\nKombinasi kebiasaan yang mendukung kesehatan organ pencernaan dan pernapasan sekaligus adalah nomor...',
+                options: ['1, 2, dan 3', '1, 4, dan 5', '2, 3, dan 4', '3, 4, dan 5'],
+                answer: 0,
+                explanation: 'Poin 1, 2, dan 3 adalah kebiasaan positif yang secara terpadu menjaga tubuh, daya tahan, organ pencernaan (serat/olahraga) dan pernapasan (masker/olahraga).'
+            }
+        ];
+
+        let activeQuestions = [];
+        let currentQIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let lives = 3;
+        let timerInterval = null;
+        let totalSeconds = 0;
+        let selectedOption = null;
+        let studentProfile = { name: '', school: '', absent: '' };
+        let userAnswersHistory = [];
+
+        // Load saved identity from localStorage if available
+        window.onload = function() {
+            const savedName = localStorage.getItem('ipas_student_name');
+            const savedSchool = localStorage.getItem('ipas_student_school');
+            const savedAbsent = localStorage.getItem('ipas_student_absent');
+            if (savedName) document.getElementById('studentName').value = savedName;
+            if (savedSchool) document.getElementById('schoolName').value = savedSchool;
+            if (savedAbsent) document.getElementById('absentNum').value = savedAbsent;
+        };
+
+        function goToIdentity() {
+            playSound('correct');
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('identityScreen').classList.remove('hidden');
+        }
+
+        function startMission(e) {
+            e.preventDefault();
+            const name = document.getElementById('studentName').value.trim();
+            const school = document.getElementById('schoolName').value.trim();
+            const absent = document.getElementById('absentNum').value.trim();
+
+            if (!name || !school) {
+                document.getElementById('identityError').classList.remove('hidden');
+                return;
+            }
+
+            studentProfile = { name, school, absent };
+            localStorage.setItem('ipas_student_name', name);
+            localStorage.setItem('ipas_student_school', school);
+            localStorage.setItem('ipas_student_absent', absent);
+
+            // Prepare Randomized Questions
+            prepareGameData();
+
+            // Reset Game Variables
+            currentQIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            lives = 3;
+            totalSeconds = 0;
+            userAnswersHistory = [];
+
+            updateLivesUI();
+            startTimer();
+
+            document.getElementById('identityScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+
+            renderCurrentQuestion();
+        }
+
+        function prepareGameData() {
+            // Clone deep and shuffle options & questions safely
+            let rawData = JSON.parse(JSON.stringify(ALL_QUESTIONS_DATA));
+            
+            // Separate Bab 1 and Bab 2 to preserve equal distribution (1-25 and 26-50)
+            let bab1 = rawData.filter(q => q.bab === 1);
+            let bab2 = rawData.filter(q => q.bab === 2);
+
+            bab1 = shuffleArray(bab1);
+            bab2 = shuffleArray(bab2);
+
+            // Shuffle options for multiple choice questions while updating answer key
+            [...bab1, ...bab2].forEach(q => {
+                if (q.type === 'mc' || q.type === 'svg_mc') {
+                    let correctText = q.options[q.answer];
+                    q.options = shuffleArray(q.options);
+                    q.answer = q.options.indexOf(correctText);
+                }
+            });
+
+            activeQuestions = [...bab1, ...bab2];
+        }
+
+        function shuffleArray(arr) {
+            let array = [...arr];
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                let hrs = Math.floor(totalSeconds / 3600);
+                let mins = Math.floor((totalSeconds % 3600) / 60);
+                let secs = totalSeconds % 60;
+                document.getElementById('timerDisplay').innerText = 
+                    `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function renderCurrentQuestion() {
+            selectedOption = null;
+            const q = activeQuestions[currentQIndex];
+            const qNum = currentQIndex + 1;
+
+            // Level Logic
+            let levelNum = Math.ceil(qNum / 10);
+            let levelNames = [
+                '🌱 LEVEL 1: Menjelajah Sistem Pencernaan',
+                '🍎 LEVEL 2: Menemukan Makanan Sehat',
+                '💪 LEVEL 3: Menjaga Tubuh Tetap Sehat',
+                '🌬️ LEVEL 4: Menjelajah Sistem Pernapasan',
+                '🫁 LEVEL 5: Penjaga Udara & Kesehatan'
+            ];
+            
+            document.getElementById('levelName').innerText = levelNames[levelNum - 1];
+
+            // Trigger Level Up Modal on Q11, Q21, Q31, Q41
+            if ((qNum === 11 || qNum === 21 || qNum === 31 || qNum === 41) && !q.levelShown) {
+                q.levelShown = true;
+                showLevelUpModal(levelNum, levelNames[levelNum - 1]);
+                return;
+            }
+
+            // Progress Bar
+            const percent = (qNum / 50) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Question Info Tags
+            document.getElementById('questionNumTag').innerText = `🧠 TANTANGAN ${qNum.toString().padStart(2, '0')} / 50`;
+            
+            let stars = q.cog === 'L1' ? '★ (L1)' : q.cog === 'L2' ? '★★ (L2)' : '★★★ (HOTS L3)';
+            document.getElementById('cogLevelTag').innerText = `LEVEL: ${stars}`;
+
+            // Render SVG Illustration if present
+            const illContainer = document.getElementById('illustrationContainer');
+            if (q.svg) {
+                illContainer.innerHTML = q.svg;
+                illContainer.classList.remove('hidden');
+            } else {
+                illContainer.classList.add('hidden');
+            }
+
+            // Question Text
+            document.getElementById('questionText').innerText = q.question;
+
+            // Render Options
+            const optsContainer = document.getElementById('optionsContainer');
+            const shortAnsContainer = document.getElementById('shortAnswerContainer');
+            optsContainer.innerHTML = '';
+
+            if (q.type === 'mc' || q.type === 'svg_mc' || q.type === 'tf') {
+                optsContainer.classList.remove('hidden');
+                shortAnsContainer.classList.add('hidden');
+
+                const prefixes = ['A', 'B', 'C', 'D'];
+                q.options.forEach((optText, idx) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-emerald-400 hover:bg-emerald-50/50 transition font-medium text-slate-700 flex items-center space-x-3 btn-bounce shadow-sm option-btn';
+                    btn.onclick = () => selectOption(idx, btn);
+                    
+                    const badge = document.createElement('span');
+                    badge.className = 'w-8 h-8 rounded-xl bg-slate-100 border border-slate-300 font-bold text-xs flex items-center justify-center text-slate-600 flex-shrink-0 option-badge';
+                    badge.innerText = prefixes[idx] || (idx + 1);
+
+                    const textSpan = document.createElement('span');
+                    textSpan.className = 'text-sm md:text-base leading-snug';
+                    textSpan.innerText = optText;
+
+                    btn.appendChild(badge);
+                    btn.appendChild(textSpan);
+                    optsContainer.appendChild(btn);
+                });
+            } else {
+                optsContainer.classList.add('hidden');
+                shortAnsContainer.classList.remove('hidden');
+                document.getElementById('shortAnswerInput').value = '';
+            }
+        }
+
+        function selectOption(idx, element) {
+            selectedOption = idx;
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-500', 'bg-emerald-100/70', 'ring-2', 'ring-emerald-400');
+                btn.classList.add('border-slate-200', 'bg-white');
+            });
+            element.classList.remove('border-slate-200', 'bg-white');
+            element.classList.add('border-emerald-500', 'bg-emerald-100/70', 'ring-2', 'ring-emerald-400');
+            playSound('correct');
+        }
+
+        function checkAnswer() {
+            const q = activeQuestions[currentQIndex];
+            let isCorrect = false;
+            let userAnsStr = '';
+
+            if (q.type === 'mc' || q.type === 'svg_mc' || q.type === 'tf') {
+                if (selectedOption === null) {
+                    alert('Yuk, pilih salah satu jawaban terlebih dahulu!');
+                    return;
+                }
+                isCorrect = (selectedOption === q.answer);
+                userAnsStr = q.options[selectedOption];
+            } else {
+                const inputVal = document.getElementById('shortAnswerInput').value.trim();
+                if (!inputVal) {
+                    alert('Ketik jawabanmu terlebih dahulu!');
+                    return;
+                }
+                userAnsStr = inputVal;
+                isCorrect = (inputVal.toLowerCase() === String(q.answer).toLowerCase());
+            }
+
+            // Record Answer
+            userAnswersHistory.push({
+                qNum: currentQIndex + 1,
+                question: q.question,
+                userAns: userAnsStr,
+                correctAns: (q.type === 'mc' || q.type === 'svg_mc' || q.type === 'tf') ? q.options[q.answer] : q.answer,
+                isCorrect: isCorrect,
+                explanation: q.explanation,
+                topic: q.topic
+            });
+
+            if (isCorrect) {
+                score += 2; // 50 Qs * 2 pts = 100 max
+                correctCount++;
+                playSound('correct');
+                showFeedbackModal(true, q);
+            } else {
+                wrongCount++;
+                lives--;
+                if (lives < 0) lives = 0;
+                updateLivesUI();
+                playSound('wrong');
+                showFeedbackModal(false, q);
+            }
+
+            document.getElementById('currentScore').innerText = score;
+        }
+
+        function updateLivesUI() {
+            document.getElementById('heart1').innerText = lives >= 1 ? '❤️' : '🖤';
+            document.getElementById('heart2').innerText = lives >= 2 ? '❤️' : '🖤';
+            document.getElementById('heart3').innerText = lives >= 3 ? '❤️' : '🖤';
+        }
+
+        function showFeedbackModal(isCorrect, q) {
+            const modal = document.getElementById('feedbackModal');
+            const icon = document.getElementById('feedbackIcon');
+            const title = document.getElementById('feedbackTitle');
+            const sub = document.getElementById('feedbackSubtitle');
+            const discText = document.getElementById('feedbackDiscussionText');
+
+            if (isCorrect) {
+                icon.innerText = '🎉';
+                title.innerText = 'BENAR!';
+                title.className = 'text-2xl font-bold font-heading text-emerald-600';
+                sub.innerText = 'Hebat! Jawabanmu tepat sekali!';
+                confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+            } else {
+                icon.innerText = '❌';
+                title.innerText = 'BELUM TEPAT';
+                title.className = 'text-2xl font-bold font-heading text-rose-600';
+                sub.innerText = lives === 0 ? 'Nyawamu habis, tetapi petualangan belum berakhir! Tetap semangat!' : 'Tidak apa-apa! Kesalahan adalah bagian dari belajar. Yuk, pahami!';
+            }
+
+            const correctText = (q.type === 'mc' || q.type === 'svg_mc' || q.type === 'tf') ? q.options[q.answer] : q.answer;
+            discText.innerHTML = `
+                <p class="font-bold text-emerald-700 mb-1">Kunci Jawaban: ${correctText}</p>
+                <p class="text-slate-600">${q.explanation}</p>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedbackModal').classList.add('hidden');
+            currentQIndex++;
+
+            if (currentQIndex < activeQuestions.length) {
+                renderCurrentQuestion();
+            } else {
+                finishGame();
+            }
+        }
+
+        function showLevelUpModal(lvlNum, lvlTitle) {
+            playSound('levelup');
+            confetti({ particleCount: 80, spread: 90, origin: { y: 0.5 } });
+            document.getElementById('levelUpDetails').innerHTML = `
+                <p class="font-bold text-slate-800 text-lg mb-1">Selamat! Kamu Naik ke Level ${lvlNum}</p>
+                <p class="text-xs text-slate-600">${lvlTitle}</p>
+            `;
+            document.getElementById('levelUpModal').classList.remove('hidden');
+        }
+
+        function closeLevelUpModal() {
+            document.getElementById('levelUpModal').classList.add('hidden');
+            renderCurrentQuestion();
+        }
+
+        function finishGame() {
+            clearInterval(timerInterval);
+            playSound('cert');
+            confetti({ particleCount: 150, spread: 100, origin: { y: 0.4 } });
+
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            document.getElementById('resName').innerText = studentProfile.name;
+            document.getElementById('resSchool').innerText = studentProfile.school;
+            document.getElementById('resTime').innerText = document.getElementById('timerDisplay').innerText;
+
+            document.getElementById('resScore').innerText = score;
+            document.getElementById('resCorrect').innerText = correctCount;
+            document.getElementById('resWrong').innerText = wrongCount;
+
+            const percent = Math.round((correctCount / 50) * 100);
+            document.getElementById('resPercent').innerText = `${percent}%`;
+
+            // Predicate Logic
+            let predicate = '';
+            let motivation = '';
+
+            if (score >= 90) {
+                predicate = '🏆 PAHLAWAN TUBUH SEHAT';
+                motivation = 'Luar biasa sempurna! Kamu adalah pelindung kesehatan pencernaan dan pernapasan sejati!';
+            } else if (score >= 80) {
+                predicate = '🥇 PENJELAJAH TUBUH HEBAT';
+                motivation = 'Hebat sekali! Pemahamanmu tentang organ tubuh dan gizi sudah sangat mantap!';
+            } else if (score >= 70) {
+                predicate = '🥈 PEJUANG KESEHATAN';
+                motivation = 'Bagus! Kamu sudah memahami sebagian besar konsep IPAS Tubuh Sehat!';
+            } else if (score >= 60) {
+                predicate = '🥉 PEMBELAJAR TANGGUH';
+                motivation = 'Kerja bagus! Teruskan berlatih dan tingkatkan terus pemahamanmu!';
+            } else {
+                predicate = '🌟 CALON PAHLAWAN TUBUH SEHAT';
+                motivation = 'Jangan berkecil hati! Pelajari kembali pembahasan soal dan coba petualangan sekali lagi!';
+            }
+
+            document.getElementById('resPredicate').innerText = predicate;
+            document.getElementById('resMotivation').innerText = motivation;
+        }
+
+        function generateCertificateCanvas() {
+            const canvas = document.getElementById('certCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Clear Canvas
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Outer Gradient Border
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#10b981');
+            gradient.addColorStop(0.5, '#0284c7');
+            gradient.addColorStop(1, '#f59e0b');
+            ctx.lineWidth = 16;
+            ctx.strokeStyle = gradient;
+            ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+
+            // Inner Thin Border
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.strokeRect(24, 24, canvas.width - 48, canvas.height - 48);
+
+            // Header Icon / Title
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 28px Fredoka, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('🏆 SERTIFIKAT PENGHARGAAN 🏆', canvas.width / 2, 75);
+
+            ctx.fillStyle = '#0d9488';
+            ctx.font = 'bold 16px Plus Jakarta Sans, sans-serif';
+            ctx.fillText('IPAS EXPLORER: PETUALANGAN TUBUH SEHAT', canvas.width / 2, 105);
+
+            // Awarded To
+            ctx.fillStyle = '#64748b';
+            ctx.font = '14px Plus Jakarta Sans, sans-serif';
+            ctx.fillText('Diberikan kepada:', canvas.width / 2, 145);
+
+            // Student Name
+            ctx.fillStyle = '#0284c7';
+            ctx.font = 'bold 32px Fredoka, sans-serif';
+            ctx.fillText(studentProfile.name.toUpperCase(), canvas.width / 2, 190);
+
+            // School Name
+            ctx.fillStyle = '#334155';
+            ctx.font = 'bold 18px Plus Jakarta Sans, sans-serif';
+            ctx.fillText(`${studentProfile.school} - KELAS VI`, canvas.width / 2, 225);
+
+            // Reason Text
+            ctx.fillStyle = '#475569';
+            ctx.font = '14px Plus Jakarta Sans, sans-serif';
+            ctx.fillText('Atas keberhasilannya menyelesaikan 50 Tantangan Evaluasi IPAS SD Semester 1', canvas.width / 2, 270);
+            ctx.fillText('Materi Sistem Pencernaan, Makanan Bergizi, & Sistem Pernapasan Manusia', canvas.width / 2, 292);
+
+            // Score Box Graphic
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(canvas.width / 2 - 250, 320, 500, 90);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(canvas.width / 2 - 250, 320, 500, 90);
+
+            ctx.fillStyle = '#10b981';
+            ctx.font = 'bold 26px Fredoka, sans-serif';
+            ctx.fillText(`NILAI AKHIR: ${score} / 100`, canvas.width / 2, 355);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 14px Plus Jakarta Sans, sans-serif';
+            const todayStr = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+            ctx.fillText(`Jawaban Benar: ${correctCount} dari 50 Soal  |  Tanggal: ${todayStr}`, canvas.width / 2, 390);
+
+            // Cert Number
+            const certNo = `NO: IPAS-EX6/${Date.now().toString().slice(-6)}`;
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '12px monospace';
+            ctx.fillText(certNo, canvas.width / 2, 445);
+
+            // Signatures & Developer Footer
+            ctx.fillStyle = '#334155';
+            ctx.font = 'bold 12px Plus Jakarta Sans, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Pengembang Media:', 200, 500);
+            ctx.fillText('Giga Innovation', 200, 560);
+            ctx.font = '11px Plus Jakarta Sans, sans-serif';
+            ctx.fillText('081329200985', 200, 578);
+
+            ctx.font = 'bold 12px Plus Jakarta Sans, sans-serif';
+            ctx.fillText('Tim Verifikasi IPAS:', canvas.width - 200, 500);
+            ctx.fillText('Pahlawan Tubuh Sehat', canvas.width - 200, 560);
+            ctx.font = '11px Plus Jakarta Sans, sans-serif';
+            ctx.fillText('Sekolah Dasar Indonesia', canvas.width - 200, 578);
+
+            // Decorative lines for signature
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(120, 545);
+            ctx.lineTo(280, 545);
+            ctx.moveTo(canvas.width - 280, 545);
+            ctx.lineTo(canvas.width - 120, 545);
+            ctx.stroke();
+        }
+
+        function showCertificateModal() {
+            generateCertificateCanvas();
+            document.getElementById('certificateModal').classList.remove('hidden');
+        }
+
+        function closeCertificateModal() {
+            document.getElementById('certificateModal').classList.add('hidden');
+        }
+
+        function downloadCertificate() {
+            const canvas = document.getElementById('certCanvas');
+            const cleanName = studentProfile.name.replace(/[^a-zA-Z0-9]/g, '_');
+            const fileName = `Sertifikat_IPAS_Explorer_${cleanName}.png`;
+
+            const link = document.createElement('a');
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function showFullDiscussionScreen() {
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('discussionScreen').classList.remove('hidden');
+
+            const listContainer = document.getElementById('fullDiscussionList');
+            listContainer.innerHTML = '';
+
+            userAnswersHistory.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-2xl border ${item.isCorrect ? 'bg-emerald-50/60 border-emerald-200' : 'bg-rose-50/60 border-rose-200'} space-y-2 text-xs md:text-sm`;
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-center font-bold">
+                        <span class="text-slate-800">SOAL ${item.qNum.toString().padStart(2, '0')} (${item.topic})</span>
+                        <span class="px-2.5 py-1 rounded-full text-xs ${item.isCorrect ? 'bg-emerald-200 text-emerald-800' : 'bg-rose-200 text-rose-800'}">
+                            ${item.isCorrect ? '✅ Sudah dikuasai' : '❌ Perlu dipelajari lagi'}
+                        </span>
+                    </div>
+                    <p class="text-slate-700 font-semibold">${item.question}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs pt-1">
+                        <div class="p-2 rounded-xl bg-white/80 border border-slate-200">
+                            <span class="text-slate-500 font-bold block">Jawaban Kamu:</span>
+                            <span class="${item.isCorrect ? 'text-emerald-700 font-bold' : 'text-rose-600 font-bold'}">${item.userAns}</span>
+                        </div>
+                        <div class="p-2 rounded-xl bg-white/80 border border-slate-200">
+                            <span class="text-slate-500 font-bold block">Jawaban Benar:</span>
+                            <span class="text-emerald-700 font-bold">${item.correctAns}</span>
+                        </div>
+                    </div>
+                    <div class="p-2.5 rounded-xl bg-white/90 border border-slate-200 text-slate-600 text-xs leading-relaxed">
+                        <strong class="text-slate-800">📖 Pembahasan:</strong> ${item.explanation}
+                    </div>
+                `;
+
+                listContainer.appendChild(card);
+            });
+        }
+
+        function backToResult() {
+            document.getElementById('discussionScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+        }
+
+        function restartGame() {
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('discussionScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+
+            prepareGameData();
+            currentQIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            lives = 3;
+            totalSeconds = 0;
+            userAnswersHistory = [];
+
+            updateLivesUI();
+            startTimer();
+            renderCurrentQuestion();
+        }
+
+        function goHome() {
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('discussionScreen').classList.add('hidden');
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
